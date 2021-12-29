@@ -137,7 +137,8 @@ def main(data_path, args, resume, max_data=0, uncertainty_portion=0):
         checkpoint = torch.load(resume)
         classifier.load_state_dict(checkpoint['model_state_dict'])
 
-    classifier.cuda()
+    if torch.cuda.is_available():
+        classifier.cuda()
     classifier.train()
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(classifier.parameters(), lr=0.001)
@@ -159,8 +160,9 @@ def main(data_path, args, resume, max_data=0, uncertainty_portion=0):
             optimizer.zero_grad()
             img, mask = da[0], da[1]
 
-            img = img.cuda()
-            mask = mask.cuda()
+            if torch.cuda.is_available():
+                img = img.cuda()
+                mask = mask.cuda()
 
             input_img_tensor = []
             for b in range(img.size(0)):

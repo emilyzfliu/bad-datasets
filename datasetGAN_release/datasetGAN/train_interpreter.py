@@ -154,7 +154,9 @@ def prepare_stylegan(args):
 
         g_all.load_state_dict(torch.load(args['stylegan_checkpoint'], map_location=device))
         g_all.eval()
-        g_all = nn.DataParallel(g_all, device_ids=device_ids).cuda()
+        g_all = nn.DataParallel(g_all, device_ids=device_ids)
+        if torch.cuda.is_available():
+            g_all = g_all.cuda()
 
     else:
         assert "Not implementated error"
@@ -219,7 +221,9 @@ def generate_data(args, checkpoint_path, num_sample, start_step=0, vis=True):
 
         classifier = pixel_classifier(numpy_class=args['number_class']
                                       , dim=args['dim'][-1])
-        classifier =  nn.DataParallel(classifier, device_ids=device_ids).cuda()
+        classifier =  nn.DataParallel(classifier, device_ids=device_ids)
+        if torch.cuda.is_available():
+            classifier = classifier.cuda()
 
         checkpoint = torch.load(os.path.join(checkpoint_path, 'model_' + str(MODEL_NUMBER) + '.pth'))
 
@@ -352,7 +356,9 @@ def generate_data(args, checkpoint_path, num_sample, start_step=0, vis=True):
 def prepare_data(args, palette):
     g_all, avg_latent, upsamplers = prepare_stylegan(args)
     latent_all = np.load(args['annotation_image_latent_path'])
-    latent_all = torch.from_numpy(latent_all).cuda()
+    latent_all = torch.from_numpy(latent_all)
+    if torch.cuda.is_available():
+        latent_all = latent_all.cuda()
 
     # load annotated mask
     mask_list = []
@@ -474,7 +480,9 @@ def main(args
 
         classifier.init_weights()
 
-        classifier = nn.DataParallel(classifier, device_ids=device_ids).cuda()
+        classifier = nn.DataParallel(classifier, device_ids=device_ids)
+        if torch.cuda.is_available():
+            classifier = classifier.cuda()
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(classifier.parameters(), lr=0.001)
         classifier.train()

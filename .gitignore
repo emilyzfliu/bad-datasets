@@ -1,0 +1,7 @@
+*.ipynb_checkpoints/
+*__pycache__
+*.DS_Store
+datasetGAN_release/datasetGAN/*.zip
+datasetGAN_release/datasetGAN/checkpoints
+datasetGAN_release/datasetGAN/dataset_release
+datasetGAN_release/datasetGAN/model_dir

@@ -75,7 +75,9 @@ def prepare_stylegan(args):
 
         g_all.load_state_dict(torch.load(args['stylegan_checkpoint'], map_location=device))
         g_all.eval()
-        g_all = nn.DataParallel(g_all, device_ids=device_ids).cuda()
+        g_all = nn.DataParallel(g_all, device_ids=device_ids)
+        if torch.cuda.is_available():
+            g_all = g_all.cuda()
 
         if args['average_latent'] == '':
             avg_latent = g_all.module.g_mapping.make_mean_latent(8000)

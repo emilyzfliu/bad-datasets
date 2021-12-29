@@ -91,7 +91,9 @@ def latent_to_image(g_all, upsamplers, latents, return_upsampled_layers=False, u
         number_feautre += item.shape[1]
 
 
-    affine_layers_upsamples = torch.FloatTensor(1, number_feautre, dim, dim).cuda()
+    affine_layers_upsamples = torch.FloatTensor(1, number_feautre, dim, dim)
+    if torch.cuda.is_available():
+        affine_layers_upsamples = affine_layers_upsamples.cuda()
     if return_upsampled_layers:
 
         start_channel_index = 0

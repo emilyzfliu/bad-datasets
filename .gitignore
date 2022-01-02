@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 *.zip
 baseline*
-=======
+baseline_files.zip
 baseline_files
->>>>>>> parent of 55cb760... generator with drive file loading
 *.ipynb_checkpoints/
 *__pycache__
 *.DS_Store

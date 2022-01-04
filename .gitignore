@@ -1,3 +1,5 @@
+notebooks/*.csv
+notebooks/*.npy
 *.zip
 baseline*
 baseline_files.zip

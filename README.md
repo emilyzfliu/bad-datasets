@@ -18,7 +18,20 @@ Then, I will repeat the process where one of the segmentation labels from the or
 
 We would expect to observe a decrease in performance when training on the augmented perturbed dataset. Ideally, we will find that the original datasetGAN is also able to identify whether or not an image has been perturbed. If this is possible, then we can demonstrate that DatasetGAN can also be used to identify mislabelled images in datasets.
 
-## TODO
-1. run the experiments
-2. look at other generative architectures/data aug. techinques
-3. look at other data perturb techniques
+## Implementation
+Due to computing constraints, I used the cats dataset with 17 image samples as the generative seed dataset.
+
+To evaluate, we assess the mean IOU (intersection over union) of predicted classes.
+
+The first perturbed dataset we assessed was where one image mask (out of 17) was perturbed to 78% agreement with the original.
+
+## Preliminary Results
+|Dataset | Mean IOU over classes|
+---------------------------------
+|Baseline from datasetGAN paper|32.63|
+|Baseline|26.09|
+|1 perturbed image|26.60|
+
+There is no discernible difference in IOU over the two datasets, but this is likely because the generative model is unable to generate realistic images. The error from attempting to learn a label mask over the generated images is greater than the error we introduced artificially.
+
+To more meaningfully assess the impact of improperly labelled data on generative dataset modelling, we would first need to train a better baseline. This means getting access to better compute resources which will enable us to train on the benchmark datasets of the datasetGAN paper (Conversely, there also arises a need for less memory hungry GAN-based architectures). We first attempt to match the baseline IOUs from the faces, cars, and cats datasets. Once we have a more established baseline, we can more easily see how bad data could take us away from that baseline. 

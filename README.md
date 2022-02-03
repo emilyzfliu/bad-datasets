@@ -27,7 +27,7 @@ The first perturbed dataset we assessed was where one image mask (out of 17) was
 
 ## Preliminary Results
 |Dataset | Mean IOU over classes|
----------------------------------
+|--------- |------------------------|
 |Baseline from datasetGAN paper|32.63|
 |Baseline|26.09|
 |1 perturbed image|26.60|
